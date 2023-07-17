@@ -6,4 +6,10 @@ sudo chmod -R 777 /myagent
 runuser -l testadmin -c '/myagent/config.sh --unattended  --url https://dev.azure.com/<MyDevOpsOrg> --auth pat --token <MyDevOpsToken> --pool <MyDevOpsPool>'
 sudo /myagent/svc.sh install
 sudo /myagent/svc.sh start
+sudo apt-add-repository ppa:ansible/ansible -y
+sudo apt update
+sudo apt install ansible -y
+sudo apt install python3-pip -y
+pip install pywinrm[credssp]
+pip install pywinrm --upgrade
 exit 0

@@ -1,10 +1,3 @@
-locals {
-    current_timestamp  = timestamp()
-    current_day        = formatdate("YYYY-MM-DD", local.current_timestamp)
-    tomorrow           = timeadd(local.current_timestamp, "24h")
-    tommorw_format     = formatdate("YYYY-MM-DD", local.tomorrow)
-}
-
 #brings in some data from your Az login session
  data "azurerm_client_config" "current" {}
 

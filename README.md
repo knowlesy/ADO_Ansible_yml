@@ -3,6 +3,8 @@ Azure Devops Ansible Pipeline
 
 This is a brief guide to setting up a simple environment for utilising ansible in an ADO Pipeline to configure Windows VM's
 
+This is a lab only !
+
 References below have helped in making this example 
 * [Linux Machine Creation](https://learn.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-terraform)
 * [Windows VM Creation](https://learn.microsoft.com/en-us/azure/virtual-machines/windows/quick-create-terraform)
@@ -12,6 +14,8 @@ References below have helped in making this example
 * [ADO Agent Extension](https://jamescook.dev/azuredevops-linux-agent-install-using-terraform)
 * [Ansible Credssp](https://docs.ansible.com/ansible/latest/os_guide/windows_winrm.html#credssp)
 * [Uploading multiple files to a SA with TF](https://thomasthornton.cloud/2022/07/11/uploading-contents-of-a-folder-to-azure-blob-storage-using-terraform/)
+* [Ansible on Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-ansible-on-ubuntu-20-04)
+* [Server did not response with a CredSSP ](https://stackoverflow.com/questions/62157332/ansible-winrm-server-did-not-response-with-a-credssp-token-after-step-step-5)
 
 Git clone and cd into the TF folder then run through the motions
 
