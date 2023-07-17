@@ -1,3 +1,10 @@
+locals {
+    current_timestamp  = timestamp()
+    current_day        = formatdate("YYYY-MM-DD", local.current_timestamp)
+    tomorrow           = timeadd(local.current_timestamp, "24h")
+    tommorw_format     = formatdate("YYYY-MM-DD", local.tomorrow)
+}
+
 #brings in some data from your Az login session
  data "azurerm_client_config" "current" {}
 
@@ -130,6 +137,7 @@ resource "azurerm_network_interface" "ado_agent_nic" {
   }
 }
 
+
 # Create Linux virtual machine
 resource "azurerm_linux_virtual_machine" "ado_agent_vm" {
   depends_on =  [azurerm_key_vault.vault]
@@ -156,7 +164,6 @@ resource "azurerm_linux_virtual_machine" "ado_agent_vm" {
   admin_username                  = "testadmin"
   admin_password                  =  azurerm_key_vault_secret.key.value
   disable_password_authentication = false
-
 }
 
 # Create network interface for Windows VM
@@ -174,7 +181,7 @@ resource "azurerm_network_interface" "windows_nic" {
 }
 
 # Create Windows virtual machine
-resource "azurerm_windows_virtual_machine" "main" {
+resource "azurerm_windows_virtual_machine" "test_machine" {
   depends_on            = [azurerm_key_vault.vault]
   name                  = "windowsVM"
   admin_username        = "testadmin"
@@ -197,4 +204,37 @@ resource "azurerm_windows_virtual_machine" "main" {
     version   = "latest"
   }
 
+}
+
+#Creates boot strap script for linux vm and applies the ado agent to it 
+resource "azurerm_virtual_machine_extension" "devops_agent" {
+  name                 = "ext-devops"
+  virtual_machine_id   = azurerm_linux_virtual_machine.ado_agent_vm.id
+  publisher            = "Microsoft.Azure.Extensions"
+  type                 = "CustomScript"
+  type_handler_version = "2.0"
+
+      protected_settings = <<PROT
+    {
+        "script": "${base64encode(file(var.scfile))}"
+    }
+    PROT
+
+   depends_on = [
+       azurerm_linux_virtual_machine.ado_agent_vm
+       ]
+}
+
+resource "azurerm_virtual_machine_extension" "software" {
+  name                 = "winrm"
+  virtual_machine_id   = azurerm_windows_virtual_machine.test_machine.id
+  publisher            = "Microsoft.Compute"
+  type                 = "CustomScriptExtension"
+  type_handler_version = "1.9"
+
+  protected_settings = <<SETTINGS
+  {
+     "commandToExecute": "powershell -ExecutionPolicy Unrestricted Enable-WSManCredSSP -Role Server -Force"
+  }
+  SETTINGS
 }

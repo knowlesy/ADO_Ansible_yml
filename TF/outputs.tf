@@ -12,7 +12,12 @@ output "public_ip_address" {
 }
 
 output "password" {
-  value     = "azurerm_key_vault_secret.key.value"
+  value     = azurerm_key_vault_secret.key.value
   sensitive = true
+}
+
+output "password_not_hidden" {
+  value     = nonsensitive(azurerm_key_vault_secret.key.value)
+  
 }
 
