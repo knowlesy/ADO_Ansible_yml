@@ -227,7 +227,7 @@ resource "azurerm_virtual_machine_extension" "software" {
 
   protected_settings = <<SETTINGS
   {
-     "commandToExecute": "powershell -ExecutionPolicy Unrestricted Enable-WSManCredSSP -Role Server -Force"
+    "commandToExecute": "powershell -ExecutionPolicy Unrestricted Enable-WSManCredSSP -Role Server -Force; Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False"
   }
   SETTINGS
 }
