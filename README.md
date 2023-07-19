@@ -3,13 +3,13 @@ Azure Devops Ansible Pipeline
 
 ADO = Azure Devops
 
-This is a brief guide to setting up a simple environment for utilising ansible in an ADO Classic Pipeline to configure Windows VM's
+This is a brief guide to setting up a simple environment for utilizing ansible in an ADO Classic Pipeline to configure Windows VM's utilising winping as a demo to prove this works
 
 This is a lab only !
 
-## Pre-Reqs
+## Pre-Req's
 
-* Azure Devops Orginisation and Project for testing
+* Azure Devops Organization and Project for testing
 * terraform installed locally
 * VSCode with TF Extension and Git
 * AZ Cli or AZ PS Module 
@@ -23,13 +23,13 @@ Git clone in VS Code and cd into the TF folder then run through the motions
 
 Import the repo t your test project in ADO [Guide](https://learn.microsoft.com/en-us/azure/devops/repos/git/import-git-repository?view=azure-devops)
 
-Update the ado.sh file replacing all items within the <> brackets, dont forget to remove the brackets (see [here](https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=Windows) for how to create PAT Tokens and [here](https://learn.microsoft.com/en-us/azure/devops/pipelines/agents/pools-queues?view=azure-devops&tabs=yaml%2Cbrowser) for Agent pools)
+Update the ado.sh file replacing all items within the <> brackets, don't forget to remove the brackets (see [here](https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=Windows) for how to create PAT Tokens and [here](https://learn.microsoft.com/en-us/azure/devops/pipelines/agents/pools-queues?view=azure-devops&tabs=yaml%2Cbrowser) for Agent pools)
 
 In your VSCode Terminal 
 
 Log in to azure [AZ CLI](https://learn.microsoft.com/en-us/cli/azure/authenticate-azure-cli) or [Powershell](https://learn.microsoft.com/en-us/powershell/azure/authenticate-azureps?view=azps-10.1.0)
 
-Initialise TF Code
+Initialize TF Code
 
     terraform init -upgrade
 
@@ -41,14 +41,13 @@ Apply TF Code
 
     terraform apply main.tfplan
 
-In ADO Project or Org settings check the agent is showing
+In your web browser and in ADO Project or Org settings check the agent is showing
 
 ![image](https://github.com/knowlesy/ADO_Ansible/assets/20459678/5eff9620-d581-4c54-8986-dd3306a8bd3c)
 
-Ensure your Service PRinciple has access to the keyvault (note if you havent done this you can manually set these later instead of linking a keyvault ensuring their hidden) [guide for SP on keyvault](https://learn.microsoft.com/en-us/azure/key-vault/general/assign-access-policy?tabs=azure-portal)
+Ensure your Service Principle has access to the keyvault (note if you haven't done this you can manually set these later instead of linking a keyvault ensuring their hidden) [guide for SP on keyvault](https://learn.microsoft.com/en-us/azure/key-vault/general/assign-access-policy?tabs=azure-portal)
 
 ![image](https://github.com/knowlesy/ADO_Ansible/assets/20459678/f86de58d-6b6b-4001-bb4b-dc089416bbcc)
-
 
 Create Library groups
 
@@ -56,7 +55,7 @@ Create Library groups
 
 ![image](https://github.com/knowlesy/ADO_Ansible/assets/20459678/47e699ab-5709-46c0-9988-9cc2e3d46430)
 
-Click Link Secrets from... (if your not using a SP create secure variables here)
+Click "Link Secrets" from... (if your not using a SP create secure variables here)
 
 ![image](https://github.com/knowlesy/ADO_Ansible/assets/20459678/c0ab10c5-4bda-41d8-9574-5edb5d4f5dff)
 
@@ -64,11 +63,11 @@ Fill in the details
 
 ![image](https://github.com/knowlesy/ADO_Ansible/assets/20459678/f381f8fd-90b3-44ac-8555-7179735a4396)
 
-Click add , select the password and click ok
+Click "add", select the password and click "ok"
 
 ![image](https://github.com/knowlesy/ADO_Ansible/assets/20459678/929a1d55-3c39-4882-8cf9-a920f6e79982)
 
-Set the name of this library and click save 
+Set the name of this library and click "save" 
 
 Create a Pipeline 
 
@@ -96,11 +95,11 @@ Browse and select the winping.yml file
 
 ![image](https://github.com/knowlesy/ADO_Ansible/assets/20459678/438d421b-0923-4235-b339-43008490151a)
 
-set Inventory to inline and copy the contents of the inventory.ini file and paste in the Content text box below
+set Inventory to inline and copy the contents of the inventory.ini file, then paste in the Content text box below. Ensure you update the <ip address..> with the local ip of the windows vm
 
 ![image](https://github.com/knowlesy/ADO_Ansible/assets/20459678/fc7d272f-0e97-4c9e-9323-d622997d6b07)
 
-Click Variables then variable groups. Click Link variable...select your library group
+Click "Variables" then "variable groups". Click "Link variable"...select your library group
 
 ![image](https://github.com/knowlesy/ADO_Ansible/assets/20459678/35cd6921-f0ef-44c6-95e8-7384523539e1)
 

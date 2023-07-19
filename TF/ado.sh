@@ -14,5 +14,4 @@ pip install pywinrm[credssp]
 pip install pywinrm --upgrade
 ansible-galaxy collection install azure.azcollection
 sudo pip3 install -r ~/.ansible/collections/ansible_collections/azure/azcollection/requirements-azure.txt
-
 exit 0
