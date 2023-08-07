@@ -3,7 +3,7 @@ Azure Devops Ansible Pipeline
 
 ADO = Azure Devops
 
-This is a brief guide to setting up a simple environment for utilizing ansible in an ADO Classic Pipeline to configure Windows VM's utilising winping as a demo to prove this works
+This is a brief guide to setting up a simple environment for utilizing ansible in an ADO YAML Pipeline to configure Windows VM's utilising winping as a demo to prove this works
 
 This is a lab only !
 
