@@ -125,3 +125,6 @@ References below have helped in making this example
 * [Server did not response with a CredSSP ](https://stackoverflow.com/questions/62157332/ansible-winrm-server-did-not-response-with-a-credssp-token-after-step-step-5)
 * [Ansible Dynamic Libraries in Azure](https://learn.microsoft.com/en-us/azure/developer/ansible/dynamic-inventory-configure?tabs=azure-cli)
 * [ADO Ansible](https://theazureblog.co.uk/azure-devops-ansible)
+* [ANSIBLE: BRING POWERSHELL OUTPUT INTO ANSIBLE VARIABLES](https://kmg.group/posts/2021-06-25-bring-powershell-output-to-ansible/)
+* [Win_update results](https://www.reddit.com/r/ansible/comments/f6z6hv/win_update_results/)
+* [ansible.windows.win_updates not applying cumulative updates correctly](https://github.com/ansible-collections/ansible.windows/issues/180)
