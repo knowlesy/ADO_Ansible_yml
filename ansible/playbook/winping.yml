@@ -1,6 +1,6 @@
 ---
 - name: Windows Test Playbook
-  hosts: win
+  hosts: windows
   tasks:
   - name: winping task
     win_ping:

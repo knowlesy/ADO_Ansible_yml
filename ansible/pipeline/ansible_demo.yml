@@ -1,0 +1,71 @@
+---
+variables:
+
+#additional IDs that need to be modified no <> is needed 
+- name: tennant
+  value: '<tennant id>'
+- name: appid
+  value: '<service principle id>'
+# refences the variable group you linked with your keyvault
+- group: Ansible
+
+# Your agent
+pool:
+  name: 'Ansible'
+
+steps:
+#This is a run once however has no impact on running multiple times this simply installs the dependancies as the vsts agent so the dynamic inventory can work 
+- task: Bash@3
+  displayName: 'Az Dynamic Inventory Pre-req'
+  inputs:
+    targetType: 'inline'
+    script: 'sudo pip3 install -r /usr/share/ansible/collections/ansible_collections/azure/azcollection/requirements-azure.txt'
+
+#Copies your inventory file to your agent and forces clearing the folder 
+- task: CopyFiles@2
+  displayName: 'Copying Inventory Configuration'
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)/ansible/inventory'
+    Contents: '*.*'
+    TargetFolder: '/etc/ansible/inventory'
+    CleanTargetFolder: true
+    retryCount: '2'
+    ignoreMakeDirErrors: true
+
+#Copies the playbook to your agent 
+- task: CopyFiles@2
+  displayName: 'Copying Playbooks'
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)/ansible/playbook'
+    Contents: '*.*'
+    TargetFolder: '/etc/ansible/playbook'
+    CleanTargetFolder: true
+    retryCount: '2'
+    ignoreMakeDirErrors: true
+
+#Performs AZ Login as your service principle 
+- task: Bash@3
+  displayName: 'AZ Login for Dynamic Repo'
+  inputs:
+    targetType: 'inline'
+    script: 'az login --service-principal -u $(appid) -p $(password) -t $(tennant)'
+
+#This shows you the breakdown of vms within your dynamic inventory linux or windows 
+- task: Bash@3
+  displayName: 'Reports Inventory List'
+  inputs:
+    targetType: 'inline'
+    script: 'ansible-inventory -i /etc/ansible/inventory/inventory_azure_rm.yaml --graph'
+# Executes a playbook against the machines in this example its only winping 
+- task: Bash@3
+  displayName: 'My First Playbook'
+  inputs:
+    targetType: 'inline'
+    script: 'ansible-playbook -i /etc/ansible/inventory/inventory_azure_rm.yaml /etc/ansible/playbook/winping.yml -e "ansible_port=5985 ansible_connection=winrm ansible_winrm_transport=credssp ansible_winrm_server_cert_validation=ignore ansible_user=testadmin ansible_password=$(serverPassword)"'
+#Logs out of the session 
+- task: Bash@3
+  displayName: 'AZ Logout'
+  inputs:
+    targetType: 'inline'
+    script: 'az logout'
+  continueOnError: true

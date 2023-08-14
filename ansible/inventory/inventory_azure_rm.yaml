@@ -1,0 +1,10 @@
+plugin: azure_rm
+# creates tagged inventories to target playbooks against by performing lookups on the vms
+conditional_groups:
+  linux: "'Canonical' in image.publisher"
+  windows: "'WindowsServer' in image.offer"
+#specifies local ip address first by default it tries to get a public ip first 
+hostvar_expressions:
+ ansible_host: (public_dns_hostnames + private_ipv4_addresses) | first
+#specifies the method to authenticate 
+auth_source: cli

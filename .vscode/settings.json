@@ -1,0 +1,6 @@
+{
+    "yaml.schemas": {
+        "https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/master/service-schema.json": "file:///d%3A/Repo/ADO_Ansible_yml/ansible/Pipeline/ansible_demo.yml",
+        "https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/inventory.json": "file:///d%3A/Repo/ADO_Ansible_yml/ansible/Inventory/azure_inventory.yml"
+    }
+}

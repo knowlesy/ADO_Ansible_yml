@@ -164,6 +164,9 @@ resource "azurerm_windows_virtual_machine" "test_machine" {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
   }
+    tags = {
+    os = "windows"
+  }
   source_image_reference {
     publisher = "MicrosoftWindowsServer"
     offer     = "WindowsServer"
