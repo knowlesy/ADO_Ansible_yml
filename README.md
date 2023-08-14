@@ -1,4 +1,4 @@
-# ADO_Ansible_YML - TBC
+# ADO_Ansible_YML
 Azure Devops Ansible Pipeline
 
 ADO = Azure Devops
